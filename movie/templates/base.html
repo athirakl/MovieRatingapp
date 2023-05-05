@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+.w3-bar-block .w3-bar-item {padding:20px}
+</style>
+
+</head>
+<body>
+
+<!-- Sidebar (hidden by default) -->
+<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-large w3-animate-left" style="display:none;z-index:2;width:20%;min-width:300px;" id="mySidebar">
+  
+    <h1>welcome {{request.user}}</h1>
+    <p class="w3-center">
+      {%if request.user.profile.profile_pic%}
+       <img src="{{request.user.profile.profile_pic.url}}" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
+      {%else%}
+       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtxwBGpoFONlCRbZw5zEvhbhNJwxkDHrSV_A&usqp=CAU" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
+      {%endif%}
+    </p>
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button">Close Menu</a>
+    {%if request.user.profile%}
+    <ul>
+       <li><a href="{%url 'myprofile'%}">view profile</a></li>
+       <li><a href="{%url 'profile-edit' request.user.profile.id%}">edit profile</a></li>
+       <li><a href="{%url 'movie-lista'%}">View movies</a></li>
+    </ul>    
+    {%else%}
+       <a href="{%url 'profile-add'%}">add profile</a>
+       <li><a href="{%url 'movie-lista'%}">View movies</a></li>
+    {%endif%}
+    
+  <!-- {%if request.user.profile.role == admin%}
+      <a href="{%url 'home'%}">movie-add</a>
+      <a href="{%url 'movie-list'%}">edit e</a>
+   {%else%}
+      <a href="{%url 'movie-lista'%}">list Movies</a>
+   
+    {%endif%} -->
+  <!-- <a href="#food" onclick="w3_close()" class="w3-bar-item w3-button">Food</a>
+  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About</a> -->
+</nav>
+
+<!-- Top menu -->
+<div class="w3-top">
+  <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+    <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+    <div class="w3-right w3-padding-16"><a href="{%url 'signout'%}">Logout</a> </div>
+   
+    <div class="w3-right w3-padding-16 mt-4 mr-2"><a href="{%url 'wishlist'%}"><strong >Wishlist</strong> </a></div>
+    
+    
+   
+  
+    <div class="w3-center w3-padding-16">Rate Movies - Mark Your Favourites</div>
+  </div>
+</div>
+  
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-content w3-padding" style="max-width:1400px;margin-top:100px;margin-right: 0%;">
+
+  <!-- First Photo Grid-->
+
+  {%for p in movies%}
+  <div class="w3-row-padding w3-padding-16 w3-center " id="movie" style="display:inline-block;" >
+    
+    <div class="w3-quarter " style="display:inline-block;">
+      {%if p.poster%}
+         <img src="{{p.poster.url}}" alt="Sandwich" style="width:300px"  height="310px">
+         <h3>{{p.title}}</h3>
+         <h5>{{p.genre}}</h5>
+         <a href="{%url 'movie-detail' p.id %}">view</a>
+      {%else%}
+        <img src="https://wallpaperaccess.com/full/3230166.jpg" alt="{{p.movie_name}}" style="width:300px " height="310px">
+        <h3>{{p.title}}</h3>
+        <h5>{{p.genre}}</h5>
+        <a href="{%url 'movie-detail' p.id %}">view</a>
+      
+
+        {%endif%}
+    </div>
+     
+    </div>
+      
+  <!-- </div> -->
+  {%endfor%}
+
+
+
+
+
+   
+
+  
+
+  <!-- Pagination -->
+  <!-- <div class="w3-center w3-padding-32">
+    <div class="w3-bar">
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
+      <a href="#" class="w3-bar-item w3-black w3-button">1</a>
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
+    </div>
+  </div> -->
+  
+  <hr id="about">
+
+  <!-- About Section -->
+  <div class="w3-container w3-padding-32 w3-center">  
+    <h3>About us</h3><br>
+    <img src="https://beebom.com/wp-content/uploads/2022/05/best-movies-like-interstellar.jpg?w=750&quality=75" alt="Me" class="w3-image" style="display:block;margin:auto" width="800" height="533">
+    <div class="w3-padding-32">
+      <h4><b>We are just a click away from your service</b></h4>
+      <!-- <h6><i>With Passion For Real, Good Food</i></h6> -->
+      <p> We Value your time and space that is the main motive of this application .our priority is your happiness , it is just a click away from you . Here we can rate Movies and sort the best ,an idle app which save your time ,come on rate the movies choose the best and share your comments. </p>
+    </div>
+  </div>
+  <hr>
+  
+  <!-- Footer -->
+  <!-- <footer class="w3-row-padding w3-padding-32">
+    <div class="w3-third">
+      <h3>FOOTER</h3>
+      <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+      <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </div>
+  
+    <div class="w3-third">
+      <h3>BLOG POSTS</h3>
+      <ul class="w3-ul w3-hoverable">
+        <li class="w3-padding-16">
+          <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+          <span class="w3-large">Lorem</span><br>
+          <span>Sed mattis nunc</span>
+        </li>
+        <li class="w3-padding-16">
+          <img src="/w3images/gondol.jpg" class="w3-left w3-margin-right" style="width:50px">
+          <span class="w3-large">Ipsum</span><br>
+          <span>Praes tinci sed</span>
+        </li> 
+      </ul>
+    </div>
+
+    <div class="w3-third w3-serif">
+      <h3>POPULAR TAGS</h3>
+      <p>
+        <span class="w3-tag w3-black w3-margin-bottom">Travel</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">New York</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dinner</span>
+        <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Salmon</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">France</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Drinks</span>
+        <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Ideas</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Flavors</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Cuisine</span>
+        <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Chicken</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dressing</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fried</span>
+        <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fish</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Duck</span>
+      </p>
+    </div>
+  </footer> -->
+
+<!-- End page content -->
+</div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+
+</body>
+</html>
